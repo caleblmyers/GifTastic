@@ -20,12 +20,21 @@ function addButton(event) {
     event.preventDefault()
 
     searchID = ($("#gifInput").val()).charAt(0).toUpperCase() + ($("#gifInput").val()).slice(1)
+    var replaceID = searchID
+    for (let i = 0; i < searchID.length; i++) {
+        if (searchID.charAt(i) === ' ') {
+            console.log("Space at index: " + i)
+            var replaceIndex = i+1
+            var replaceLetter = searchID.charAt(replaceIndex).toUpperCase()
+            console.log(replaceLetter, replaceIndex)
+        }        
+        replaceID = searchID.replace(searchID[replaceIndex], replaceLetter)
+    }
 
     var newButton = $("<button>")
     newButton.addClass("gifButton btn btn-secondary m-1")
-    newButton.attr("data-name", searchID)
-    newButton.text(searchID)
-
+    newButton.attr("data-name", replaceID)
+    newButton.text(replaceID)
     $("#buttonsRow").append(newButton)
 }
 
@@ -58,10 +67,11 @@ function toggleAnimate() {
     var sourceReplace = ''
     
     // Returns true if the image is still
-    var stillCheck = imgSource.includes("_s.gif?")
+    var stillImage = imgSource.includes("_s.gif?")
 
-    // If the image is still
-    if (stillCheck) {
+    // If the image is still, make it animated
+    // If not, make it still
+    if (stillImage) {
         sourceReplace = imgSource.replace("_s.gif?", ".gif?")
         $(this).attr("src", sourceReplace)
     } else {
@@ -80,16 +90,12 @@ $(document).ready(function() {
 // Notes Section
 /*
 
-toggleAnimate source replace fix:
-- store both still and active sources in two arrays, replace from array
-- find out how to only pull gifs with the same type of url
-
+- Replace toggleAnimate function with "pausing-gifs.html" example
 
 TODO:
     - Format HTML like example image
+    - Mobile responsiveness
     - Add a case handler for user input
-    - Fix toggleAnimate bug
-        - Works only after clicking twice the first time
 
 BONUSES:
     - Ensure mobile responsiveness

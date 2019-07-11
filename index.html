@@ -11,15 +11,18 @@
 </head>
 
 <body class="bg-dark">
-    <div class="jumbotron bg-dark text-white text-center my-2">
+    <div class="jumbotron bg-dark text-white text-center m-2 p-3">
         <h1 class="display-4">GIF Generator</h1>
     </div>
-    <div class="container text-white">
+    <div class="container-fluid text-white">
         <div class="row">
             <div class="col-sm-12 text-center" id="buttonsRow"></div>
         </div>
         <div class="row text-center my-2">
-            <div class="col-sm-12">
+            <div class="col-sm-9">
+                <div class="row" id="gifRow"></div>
+            </div>
+            <div class="col-sm-3">
                 <form id="gif-form">
                     <label class="h4 py-2" for="gifInput">Add a button for anything you like!</label> <br>
                     <input class="my-2" type="text" id="gifInput">
@@ -29,8 +32,7 @@
             </div>
         </div>
         
-        <div class="row" id="gifRow"></div>
-      </div>
+    </div>
 
     <script src="assets/javascript/app.js"></script>
 </body>
