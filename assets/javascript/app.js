@@ -1,8 +1,5 @@
 var topics = ["Goku", "Gohan", "Vegeta", "Trunks", "Krillin", "Frieza", "Kid Buu", "Shenron"]
 
-var searchID
-var queryURL
-
 $("#buttonsRow").empty();
 
 // Add existing topics as buttons
@@ -15,6 +12,9 @@ for (var i = 0; i < topics.length; i++) {
 
     $("#buttonsRow").append(newButton);
 }
+
+var searchID
+var queryURL
 
 function addButton(event) {
     event.preventDefault()
@@ -31,7 +31,7 @@ function addButton(event) {
 
 function grabGIF() {
     searchID = $(this).attr("data-name")
-    queryURL = "https://api.giphy.com/v1/gifs/search?api_key=8lVohNW4hK6A4MpwDklFpubAMw0btVzG&limit=6&rating=PG&lang=en&q=" + searchID;
+    queryURL = "https://api.giphy.com/v1/gifs/search?api_key=8lVohNW4hK6A4MpwDklFpubAMw0btVzG&limit=10&rating=PG&lang=en&q=" + searchID;
 
     $.ajax({
         url: queryURL,
@@ -55,32 +55,18 @@ function grabGIF() {
 
 function toggleAnimate() {
     var imgSource = $(this).attr("src")
-    var stillSourceArray = ["giphy-downsized_s", "giphy_s"]
-    var stillCheck = false
-    var stillSource = ''
     var sourceReplace = ''
-
-    for (let i = 0; i < stillSourceArray.length; i++) {
-        if (!stillCheck) {
-            stillCheck = imgSource.includes(stillSourceArray[i])
-            if (stillCheck) {
-                stillSource = stillSourceArray[i]
-            }
-        }
-    }
     
-    console.log(imgSource)
-    console.log(stillSource)
-    console.log(stillCheck)
+    // Returns true if the image is still
+    var stillCheck = imgSource.includes("_s.gif?")
 
+    // If the image is still
     if (stillCheck) {
-        sourceReplace = imgSource.replace(stillSource, "giphy-downsized")
+        sourceReplace = imgSource.replace("_s.gif?", ".gif?")
         $(this).attr("src", sourceReplace)
-        stillCheck = false
     } else {
-        sourceReplace = imgSource.replace("giphy-downsized", "giphy-downsized_s")
+        sourceReplace = imgSource.replace(".gif?", "_s.gif?")
         $(this).attr("src", sourceReplace)
-        stillCheck = true
     }
 } 
 
@@ -96,7 +82,7 @@ $(document).ready(function() {
 
 toggleAnimate source replace fix:
 - store both still and active sources in two arrays, replace from array
-- 
+- find out how to only pull gifs with the same type of url
 
 
 TODO:
