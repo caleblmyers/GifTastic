@@ -45,7 +45,7 @@ function addMore() {
         method: "GET"
     }).then(function (response) {
         for (let i = 0; i < response.data.length; i++) {
-            var newDiv = $("<div class='col-lg-4 text-center mt-3 gif'>")
+            var newDiv = $("<div class='col text-center mt-3 gif'>")
             var newGIF = response.data[i].images.downsized_still.url
             var newImage = $("<img class='gifImage' alt=''>").attr({
                 src: newGIF,
@@ -75,7 +75,7 @@ function grabGIF() {
         $("#gifRow").empty()
 
         for (let i = 0; i < response.data.length; i++) {
-            var newDiv = $("<div class='col-lg-4 text-center mt-3 gif'>")
+            var newDiv = $("<div class='col text-center mt-3 gif'>")
             var newGIF = response.data[i].images.downsized_still.url
             var newImage = $("<img class='gifImage' alt=''>").attr({
                 src: newGIF,
