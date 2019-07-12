@@ -52,15 +52,24 @@ function addMore() {
                 "data-still": newGIF,
                 "data-animate": response.data[i].images.downsized.url,
                 "data-state": "still",
+                "data-position": offset + i,
             })
             var newRating = $("<p class='text-center pt-2'>").text("GIF Rating: " + response.data[i].rating.toUpperCase())
+            var favButton = $("<button class='btn btn-primary favorite'>").text("Favorite")
 
             newDiv.append(newImage)
             newDiv.append(newRating)
+            newDiv.append(favButton)
             $("#gifRow").append(newDiv)
         }
         console.log(response.data)
     })
+}
+
+function addFavorite() {
+    var favoriteDiv = $(this).parent()[0]
+    var newDiv = $(favoriteDiv).children().slice(0, 2)
+    $(newDiv).clone().appendTo("#favoritesList")
 }
 
 function grabGIF() {
@@ -77,20 +86,24 @@ function grabGIF() {
         for (let i = 0; i < response.data.length; i++) {
             var newDiv = $("<div class='col text-center mt-3 gif'>")
             var newGIF = response.data[i].images.downsized_still.url
-            var newImage = $("<img class='gifImage' alt=''>").attr({
+            var newImage = $("<img class='gifImage py-2' alt=''>").attr({
                 src: newGIF,
                 "data-still": newGIF,
                 "data-animate": response.data[i].images.downsized.url,
                 "data-state": "still",
+                "data-position": i,
             })
             var newRating = $("<p class='text-center pt-2'>").text("GIF Rating: " + response.data[i].rating.toUpperCase())
+            var favButton = $("<button class='btn btn-primary favorite'>").text("Favorite")
 
             newDiv.append(newImage)
             newDiv.append(newRating)
+            newDiv.append(favButton)
             $("#gifRow").append(newDiv)
         }
         console.log(response.data)
         $("#addMoreRow").show()
+        $("#favoritesRow").show()
     })
 }
 
@@ -111,6 +124,7 @@ $(document).ready(function() {
     $("#addMore").on("click", addMore)
     $(document).on("click", ".gifButton", grabGIF)
     $(document).on("click", ".gifImage", toggleAnimate)
+    $(document).on("click", ".favorite", addFavorite)
 });
 
 
@@ -122,8 +136,6 @@ TODO:
 
 BONUSES:
     - Ensure mobile responsiveness
-    - Allow users to add 10 more GIFs to the page
-        ** DONT REPLACE **
     - Display additional metadata (title, tags, etc.)
     - Allow users to add to a "Favorites" list
         - Should persist when the user selects or adds a new topic
