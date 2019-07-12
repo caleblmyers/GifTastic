@@ -68,8 +68,10 @@ function addMore() {
 
 function addFavorite() {
     var favoriteDiv = $(this).parent()[0]
-    var newDiv = $(favoriteDiv).children().slice(0, 2)
-    $(newDiv).clone().appendTo("#favoritesList")
+    var copyDiv = $(favoriteDiv).children().slice(0, 2)
+    var newDiv = $("<div class='col text-center mt-3 gif'>")
+    $(copyDiv).clone().appendTo(newDiv)
+    $("#favoritesList").append(newDiv)
 }
 
 function grabGIF() {
@@ -86,7 +88,7 @@ function grabGIF() {
         for (let i = 0; i < response.data.length; i++) {
             var newDiv = $("<div class='col text-center mt-3 gif'>")
             var newGIF = response.data[i].images.downsized_still.url
-            var newImage = $("<img class='gifImage py-2' alt=''>").attr({
+            var newImage = $("<img class='gifImage' alt=''>").attr({
                 src: newGIF,
                 "data-still": newGIF,
                 "data-animate": response.data[i].images.downsized.url,
@@ -137,11 +139,7 @@ TODO:
 BONUSES:
     - Ensure mobile responsiveness
     - Display additional metadata (title, tags, etc.)
-    - Allow users to add to a "Favorites" list
-        - Should persist when the user selects or adds a new topic
-        - EXTRA BONUS: Make the section persist when page is reloaded
-            - localStorage or cookies
+    - EXTRA BONUS: Make the favorites persist when page is reloaded
+        - localStorage or cookies
     - Integrate the application with additional APIs
-
-
 */
