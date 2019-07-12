@@ -1,34 +1,31 @@
 var topics = ["Goku", "Gohan", "Vegeta", "Trunks", "Krillin", "Frieza", "Kid Buu", "Shenron"]
-
 $("#buttonsRow").empty();
-
-// Add existing topics as buttons
 for (var i = 0; i < topics.length; i++) {
-
     var newButton = $("<button>");
     newButton.addClass("gifButton btn btn-secondary m-1");
     newButton.attr("data-name", topics[i]);
     newButton.text(topics[i]);
-
     $("#buttonsRow").append(newButton);
 }
-
 var searchID
 var queryURL
+
+function setCharAt(str, index, char) {
+    if (index > str.length-1) return str
+    return str.substr(0, index) + char + str.substr(index+1)
+}
 
 function addButton(event) {
     event.preventDefault()
 
-    searchID = ($("#gifInput").val()).charAt(0).toUpperCase() + ($("#gifInput").val()).slice(1)
-    var replaceID = searchID
-    for (let i = 0; i < searchID.length; i++) {
-        if (searchID.charAt(i) === ' ') {
-            console.log("Space at index: " + i)
+    var replaceID = ($("#gifInput").val()).charAt(0).toUpperCase() + ($("#gifInput").val()).slice(1)
+
+    for (let i = 0; i < replaceID.length; i++) {
+        if (replaceID.charAt(i) === ' ') {
             var replaceIndex = i+1
-            var replaceLetter = searchID.charAt(replaceIndex).toUpperCase()
-            console.log(replaceLetter, replaceIndex)
+            var replaceLetter = replaceID[replaceIndex].toUpperCase()
+            replaceID = setCharAt(replaceID, replaceIndex, replaceLetter)
         }        
-        replaceID = searchID.replace(searchID[replaceIndex], replaceLetter)
     }
 
     var newButton = $("<button>")
@@ -51,7 +48,12 @@ function grabGIF() {
         for (let i = 0; i < response.data.length; i++) {
             var newDiv = $("<div class='col-lg-4 text-center mt-3 gif'>")
             var newGIF = response.data[i].images.downsized_still.url
-            var newImage = $("<img class='gifImage' alt=''>").attr("src", newGIF)
+            var newImage = $("<img class='gifImage' alt=''>").attr({
+                src: newGIF,
+                "data-still": newGIF,
+                "data-animate": response.data[i].images.downsized.url,
+                "data-state": "still",
+            })
             var newRating = $("<p class='text-center pt-2'>").text("GIF Rating: " + response.data[i].rating.toUpperCase())
 
             newDiv.append(newImage)
@@ -63,20 +65,14 @@ function grabGIF() {
 }
 
 function toggleAnimate() {
-    var imgSource = $(this).attr("src")
-    var sourceReplace = ''
+    var state = $(this).attr("data-state")
     
-    // Returns true if the image is still
-    var stillImage = imgSource.includes("_s.gif?")
-
-    // If the image is still, make it animated
-    // If not, make it still
-    if (stillImage) {
-        sourceReplace = imgSource.replace("_s.gif?", ".gif?")
-        $(this).attr("src", sourceReplace)
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
     } else {
-        sourceReplace = imgSource.replace(".gif?", "_s.gif?")
-        $(this).attr("src", sourceReplace)
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
     }
 } 
 
@@ -90,12 +86,10 @@ $(document).ready(function() {
 // Notes Section
 /*
 
-- Replace toggleAnimate function with "pausing-gifs.html" example
-
 TODO:
     - Format HTML like example image
-    - Mobile responsiveness
     - Add a case handler for user input
+    - Mobile responsiveness
 
 BONUSES:
     - Ensure mobile responsiveness
