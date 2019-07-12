@@ -7,29 +7,40 @@
     <title>GIF Generator</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body class="bg-dark">
-    <div class="jumbotron bg-dark text-white text-center m-2 p-3">
+<body>
+    <div class="jumbotron bg-primary text-white text-center m-2 p-3">
         <h1 class="display-4">GIF Generator</h1>
     </div>
-    <div class="container-fluid text-white">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 text-center" id="buttonsRow"></div>
         </div>
+
         <div class="row text-center my-2">
             <div class="col-sm-9">
                 <div class="row" id="gifRow"></div>
             </div>
+
             <div class="col-sm-3">
-                <div class="row">
+                <div class="row my-3">
                     <div class="col-sm-12">    
                         <form id="gif-form">
                             <label class="h4 py-2" for="gifInput">Add a button for anything you like!</label> <br>
                             <input class="my-2" type="text" id="gifInput">
-                            <br>
-                            <input class="btn btn-secondary my-2" id="addGif" type="submit" value="Add">
+                            <input class="btn btn-primary my-2" id="addGif" type="submit" value="Add">
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="row" id="addMoreRow" style="display: none">
+                    <div class="col-sm-12">
+                        <form id="addForm">
+                            <label class="h4 py-2" for="addMore">Click this button to add more!</label> <br>
+                            <input class="btn btn-primary my-2" id="addMore" type="button" value="Add">
                         </form>
                     </div>
                 </div>
