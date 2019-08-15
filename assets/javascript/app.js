@@ -128,18 +128,3 @@ $(document).ready(function() {
     $(document).on("click", ".gifImage", toggleAnimate)
     $(document).on("click", ".favorite", addFavorite)
 });
-
-
-// Notes Section
-/*
-
-TODO:
-    - Mobile responsiveness
-
-BONUSES:
-    - Ensure mobile responsiveness
-    - Display additional metadata (title, tags, etc.)
-    - EXTRA BONUS: Make the favorites persist when page is reloaded
-        - localStorage or cookies
-    - Integrate the application with additional APIs
-*/
